@@ -1,0 +1,11 @@
+{
+  "name": "threejs-tutorial",
+  "version": "1.0.0",
+  "description": "three.js getting started",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "salgum1114",
+  "license": "ISC"
+}
