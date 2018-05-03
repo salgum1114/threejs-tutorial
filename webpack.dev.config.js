@@ -1,0 +1,67 @@
+const webpack = require('webpack');
+const merge = require('webpack-merge');
+const path = require('path');
+const HtmlWebpackPlugin = require('html-webpack-plugin');
+const baseConfig = require('./webpack.common.config.js');
+
+const devPort = 3001;
+const host = 'localhost';
+
+module.exports = merge(baseConfig, {
+    devtool: 'eval-source-map',
+
+    entry: {
+        bundle: [
+            'babel-polyfill',
+            'react-hot-loader/patch',
+            `webpack-dev-server/client?http://${host}:${devPort}`,
+            'webpack/hot/only-dev-server',
+            path.resolve(__dirname, 'src/index.js'),
+        ],
+    },
+
+    output: {
+        path: path.resolve(__dirname, 'public'),
+        publicPath: '/',
+        filename: '[name].[hash:16].js',
+        chunkFilename: '[id].[hash:16].js',
+    },
+
+    devServer: {
+        inline: true,
+        port: devPort,
+        contentBase: path.resolve(__dirname, 'public'),
+        hot: true,
+        publicPath: '/',
+        historyApiFallback: true,
+        host,
+        // proxy: {
+        //     '**': {
+        //         target: 'http://localhost:8080/',
+        //         secure: false,
+        //         prependPath: false,
+        //     },
+        // },
+    },
+
+    plugins: [
+        new webpack.HotModuleReplacementPlugin(), // HMR을 사용하기 위한 플러그인
+        new webpack.NamedModulesPlugin(), //브라우저에서 HMR 에러발생시 module name 표시
+        new webpack.NoEmitOnErrorsPlugin(), // console에 에러로그 찍어줌
+        new webpack.optimize.CommonsChunkPlugin({ // app.js에 들어갈만한 내용을 vendor로 빼주는 플러그인
+            name: 'vendor',
+            minChunks: function (module) {
+                // this assumes your vendor imports exist in the node_modules directory
+                return module.context && module.context.indexOf('node_modules') !== -1;
+            },
+            fileName: '[name].[hash:16]',
+        }),
+        new HtmlWebpackPlugin({
+            filename: 'index.html',
+            template: `${__dirname}/src/index.html`,
+        }),
+        new webpack.EnvironmentPlugin({
+            NODE_ENV: 'development',
+        }),
+    ],
+});
