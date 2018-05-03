@@ -2,8 +2,8 @@
 Threejs Tutorial
 ## Using React.js + three.js + ant.design
 ```shell
-- git clone
-- project import
-- npm install
-- npm start
+$ git clone
+$ project import
+$ npm install
+$ npm start
 ```
