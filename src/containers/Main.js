@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { Layout, Menu } from 'antd';
+import CHAPTERS from '../chapters';
 
 class Main extends Component {
     render() {
@@ -13,12 +14,15 @@ class Main extends Component {
                         mode="inline"
                         defaultSelectedKeys={[path[1]]}
                     >
-                        <Menu.Item key="chapter-1">
-                            <Link to="/chapter-1">Chapter 1</Link>
-                        </Menu.Item>
-                        <Menu.Item key="chapter-2">
-                            <Link to="/chapter-2">Chapter 2</Link>
-                        </Menu.Item>
+                        {
+                            CHAPTERS.map((CHAPTER) => {
+                                return (
+                                    <Menu.Item key={CHAPTER.key}>
+                                        <Link to={CHAPTER.key}>{CHAPTER.name}</Link>
+                                    </Menu.Item>
+                                );
+                            })
+                        }
                     </Menu>
                 </Layout.Sider>
                 <Layout>

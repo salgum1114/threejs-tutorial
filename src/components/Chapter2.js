@@ -15,7 +15,6 @@ class Chapter2 extends Component {
     }
 
     componentWillUnmount() {
-        console.log(this.gui);
         document.getElementsByClassName('dg ac')[0].removeChild(this.gui.domElement);
     }
 
@@ -93,7 +92,6 @@ class Chapter2 extends Component {
 
         // dat.GUI 초기화
         this.initDatGUI();
-
         document.getElementById('three').appendChild(this.renderer.domElement);
         this.renderScene();
     }

@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch, Route, Redirect } from 'react-router-dom';
 import Main from './Main';
-import Chapter1 from './Chapter1';
-import Chapter2 from './Chapter2';
+import CHAPTERS from '../chapters';
 
 class App extends Component {
     render() {
@@ -12,8 +11,13 @@ class App extends Component {
                     <Switch>
                         <Main>
                             <Route exact path="/" render={() => (<Redirect to="/chapter-1" />)} />
-                            <Route path="/chapter-1" component={Chapter1} />
-                            <Route path="/chapter-2" component={Chapter2} />
+                            {
+                                CHAPTERS.map((CHAPTER) => {
+                                    return (
+                                        <Route key={CHAPTER.key} path={`/${CHAPTER.key}`} component={CHAPTER.component} />
+                                    );
+                                })
+                            }
                         </Main>
                     </Switch>
                 </div>
